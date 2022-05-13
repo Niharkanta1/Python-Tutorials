@@ -11,6 +11,7 @@ from tkinter import messagebox
 class Cube(object):
     rows = 0
     w = 0
+    h = 0
     def __init__(self, start, dirnx=1, dirny=0, color=(255,0,0)):
         pass
 
@@ -42,21 +43,25 @@ class Snake(object):
         pass
 
 
-def drawGrid(w, rows, surface):
-    sizeBetween = w // rows
+def drawGrid(w, h, rows, surface):
+    hor = h // rows
+    ver = w // rows
     x = 0
     y = 0
-    for i in range(rows):
-        x += sizeBetween
-        y += sizeBetween
-        pygame.draw.line(surface, (192, 192, 192), (x,0), (x, w))
+   
+    for i in range(ver):
+        x += rows
+        pygame.draw.line(surface, (192, 192, 192), (x,0), (x, h))
+    
+    for j in range(hor):
+        y += rows
         pygame.draw.line(surface, (192, 192, 192), (0,y), (w, y))
-
+        
 
 def redrawWindow(surface):
-    global rows, width
+    global rows, width, height
     surface.fill((0, 0, 0))
-    drawGrid(width, rows, surface)
+    drawGrid(width, height, rows, surface)
     pygame.display.update()
 
 
@@ -69,10 +74,11 @@ def message_box(subject, content):
 
 
 def main():
-    global width, rows
-    width = 500
+    global width, height, rows
+    width = 800
+    height = 600
     rows = 20
-    win = pygame.display.set_mode((width, width))
+    win = pygame.display.set_mode((width, height))
     s = Snake((255, 0, 0), (10,10))
     run = True
     clock = pygame.time.Clock()
